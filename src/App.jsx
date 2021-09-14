@@ -1,13 +1,13 @@
-
 import Content from './components/Content/Content';
 import Header from './components/Header/Header';
-
+import Basket from './components/Basket/Basket';
 
 function App() {
   return (
     <div className="wrapper clear">
-      <Header />
-      <Content />
+      {/* <Header />
+      <Content /> */}
+      <Basket />
     </div>
   );
 }
