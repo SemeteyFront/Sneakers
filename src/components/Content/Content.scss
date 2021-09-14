@@ -1,0 +1,49 @@
+.sneakers {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 40px;
+}
+
+.card {
+  border: 1px solid #f3f3f3;
+  width: 220px;
+  padding: 20px;
+  border-radius: 40px;
+
+  h5 {
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  span {
+    font-size: 13px;
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+  
+  b {
+    font-size: 13px;
+  }
+  .kross {
+    width: 133px;
+    height: 112px;
+  }
+  .cena {
+    margin-top: 14px;
+  }
+
+  .button {
+    background: #FFFFFF;
+    border: 2px solid #F2F2F2;
+    box-sizing: border-box;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+}
+
+.plusBtn {
+  width: 11px;
+  height: 11px;
+}
