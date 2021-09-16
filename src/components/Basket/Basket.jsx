@@ -8,8 +8,6 @@ function Basket() {
     <div className="overlay">
       <div className="basket">
         <h2 className="d-flex justify-between mb-30">Корзина <img  className="cu-p removeBtn" src={btnRemove} alt="btnRemove" /></h2>
-
-        
         <div className="items">
           <div className="cartItem d-flex align-center mb-20">
             <div style={{backgroundImage: `url(${k1})`}} className="cartItemImg"></div>
