@@ -1,31 +1,31 @@
-
-import k5 from '../../assets/k5.jpg'
-import k6 from '../../assets/k6.jpg'
-import k7 from '../../assets/k7.jpg'
-import k8 from '../../assets/k8.jpg'
-import k9 from '../../assets/k9.jpg'
-import k10 from '../../assets/k10.png'
-import k11 from '../../assets/k11.png'
-import k12 from '../../assets/k12.jpg'
+import React from 'react'
+import plus from '../../assets/btnPlus.svg'
+import btnCkecked from '../../assets/btnChecked.svg'
 import heartIcon from '../../assets/heartIcon.svg'
 import './Card.scss'
 
-function Card(props) {
+function Card({ title, price, imageUrl, onFavorite, onPlus }) {
+
+  const [isAdded, setIsAdded ] = React.useState(false)
+
+  const onClickPlus = () => {
+    onPlus({title, price, imageUrl})
+    setIsAdded(!isAdded)
+  }
+
   return (
     <div className="card">
-      <div className="favorite">
+      <div className="favorite" onClick={onFavorite}>
         <img src={heartIcon} alt="heartIcon" />
       </div>
-      <img className="kross" src={props.imageUrl} alt="kross" />
-      <h5>{props.title}</h5>
+      <img className="kross" src={imageUrl} alt="kross" />
+      <h5>{title}</h5>
       <div className="cena d-flex justify-between align-center">
         <div className="d-flex flex-column">
           <p>Цена:</p>
-          <b>{props.price} сом</b>
+          <b>{price} сом</b>
         </div>
-        <button className="button">
-          +
-        </button>
+        <img src={isAdded ? btnCkecked : plus} alt="plusBtn" onClick={onClickPlus}/>
       </div>
     </div> 
   )

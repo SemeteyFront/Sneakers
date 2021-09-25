@@ -1,34 +1,62 @@
 import './Basket.scss'
-import k1 from '../../assets/k1.jpg'
 import btnRemove from '../../assets/btnRemove.svg'
 import arrow from '../../assets/arrow.svg'
+import emptyCard from '../../assets/empty-cart.png'
 
-function Basket() {
+
+function Basket({onClose, onRemove, items = []}) {
   return (
-    <div className="overlay">
+    <div>
+      <div className="overlay" onClick={onClose} />
       <div className="basket">
-        <h2 className="d-flex justify-between mb-30">Корзина <img  className="cu-p removeBtn" src={btnRemove} alt="btnRemove" /></h2>
-        <div className="items">
-          <div className="cartItem d-flex align-center mb-20">
-            <div style={{backgroundImage: `url(${k1})`}} className="cartItemImg"></div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999 сом</b>
-            </div>
-            <img className="removeBtn" src={btnRemove} alt="btnRemove" />
-          </div>
-          <div className="cartItem d-flex align-center mb-20">
-            <div style={{backgroundImage: `url(${k1})`}} className="cartItemImg"></div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999 сом</b>
-            </div>
-            <img className="removeBtn" src={btnRemove} alt="btnRemove" />
-          </div>
+        <h2 className="d-flex justify-between mb-30">
+          Корзина 
+          <img 
+            onClick={onClose} 
+            className="cu-p removeBtn" 
+            src={btnRemove} 
+            alt="btnRemove" />
+        </h2>
+
+        {
+          items.length > 0 ? 
+          <div className="items">
+          {items.map( obj => (
+              <div className="cartItem d-flex align-center mb-20">
+                <div
+                  style={{backgroundImage: `url(${obj.imageUrl})`}} 
+                  className="cartItemImg"></div>
+  
+                <div className="mr-20 flex">
+                  <p className="mb-5">{obj.title}</p>
+                  <b>{obj.price} сом</b>
+                </div>
+                <img 
+                  onClick={() => onRemove(obj.id)}
+                  className="removeBtn" 
+                  src={btnRemove} 
+                  alt="btnRemove" />
+              </div>
+          ))}
+          </div> :
+          <div className="cartEmpty d-flex align-center justify-center flex-column flex">
+          <img src={emptyCard} alt="empty" className="mb-20" />
+          <h2>Корзина пустая</h2>
+          <p className="opacity-6">Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
+          <button className="greenBtn">
+            <img className="nazad" src={arrow} alt="arrow" />
+            Вернуться назад
+          </button>
         </div>
+
+        }
+
+        
+
         
         
-          <div className="cartTotalBlock">
+        
+          {/* <div className="cartTotalBlock">
             <ul>
               <li>
                 <span>Итого: </span>
@@ -42,7 +70,7 @@ function Basket() {
               </li>
             </ul>
             <button className="greenBtn">Оформить заказ <img src={arrow} alt="arrow" /></button>
-          </div>
+          </div> */}
       </div>
     </div>
   )

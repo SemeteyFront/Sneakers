@@ -1,23 +1,43 @@
 .overlay {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
+  animation: fadeIn .3s linear;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
+
+@keyframes basket {
+  from {
+    transform: translate(420px);
+  } to {
+    transform: translate(0);
+  }
 }
 
 .basket {
-  position: absolute;
+  position: fixed;
   width: 420px;
   height: 100%;
+  top: 0;
   right: 0;
   padding: 30px;
   background: #FFFFFF;
   box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
   display: grid;
   grid-template-rows: auto 1fr auto;
+  z-index: 3;
+  animation: basket .3s ease;
 
   .items {
     overflow: auto;
@@ -94,6 +114,35 @@
       top: 20px;
       transition: transform 0.15s ease-in-out;
     }
+  }
+}
+
+
+.cartEmpty {
+  text-align: center;
+
+  p {
+    width: 280px;
+    line-height: 24px;
+  }
+
+  .greenBtn {
+    width: 245px;
+    margin-top: 20px;
+  }
+
+  &:hover {
+    .nazad {
+      transform: rotate(180deg) translateX(3px);
+    }
+  }
+
+  .nazad {
+    position: relative;
+    top: 1px;
+    transform: rotate(180deg);
+    margin-right: 15px;
+    transition: transform 0.15s ease-in-out;
   }
 }
 
