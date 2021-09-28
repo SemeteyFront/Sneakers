@@ -25,6 +25,14 @@
   }
 }
 
+.product {
+  display: grid;
+}
+
+.product .cartTotalBlock {
+  align-self: end;
+}
+
 .basket {
   position: fixed;
   width: 420px;
