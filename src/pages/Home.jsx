@@ -5,7 +5,6 @@ import btnRemove from '../assets/btnRemove.svg'
 
 function Home({
   items,
-  cartItems,
   searchValue,
   setSearchValue,
   onChangeSearchInput,
@@ -23,7 +22,6 @@ function Home({
       
       onFavorite={(obj) => onFavorite(obj)}
       onPlus={(obj) => onAddToCart(obj)}
-      added={cartItems.some(obj => +obj.id === +item.id)}
       loading={isLoading}
       {...item}
   />

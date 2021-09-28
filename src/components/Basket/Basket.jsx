@@ -1,10 +1,22 @@
+import React from 'react'
+import { AppContext } from '../../App'
 import './Basket.scss'
 import btnRemove from '../../assets/btnRemove.svg'
 import arrow from '../../assets/arrow.svg'
 import emptyCard from '../../assets/empty-cart.png'
+import oform from '../../assets/oform.jpg'
+import Info from '../Info/Info'
 
 
 function Basket({onClose, onRemove, items = []}) {
+  const { setCartItems } = React.useContext(AppContext)
+  const [ isOrderComplete, setIsOrderComplete ] = React.useState(false)
+
+  const onClickOrder = () => {
+    setIsOrderComplete(true)
+    setCartItems([])
+  }
+
   return (
     <div>
       <div className="overlay" onClick={onClose} />
@@ -54,19 +66,15 @@ function Basket({onClose, onRemove, items = []}) {
               <b>1074 сом </b>
             </li>
           </ul>
-          <button className="greenBtn">Оформить заказ <img src={arrow} alt="arrow" /></button>
+          <button onClick={onClickOrder} className="greenBtn">Оформить заказ <img src={arrow} alt="arrow" /></button>
         </div>
           </div>
           :
-          <div className="cartEmpty d-flex align-center justify-center flex-column flex">
-          <img src={emptyCard} alt="empty" className="mb-20" />
-          <h2>Корзина пустая</h2>
-          <p className="opacity-6">Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
-          <button onClick={onClose} className="greenBtn">
-            <img className="nazad" src={arrow} alt="arrow" />
-            Вернуться назад
-          </button>
-        </div>
+          <Info 
+            title={isOrderComplete ? "Заказ оформлен" : "Корзина пустая"}
+            description={isOrderComplete ? "Ваш заказ #13 скоро будет передан курьерской доставке" : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."}
+            image={isOrderComplete ? oform : emptyCard}>
+          </Info>
         }
       </div>
     </div>

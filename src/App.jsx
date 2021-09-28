@@ -6,6 +6,8 @@ import Basket from './components/Basket';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 
+export const AppContext = React.createContext({})
+
 function App() {
   const [ items, setItems] = React.useState([])
   const [ cartItems, setCartItems] = React.useState([])
@@ -55,11 +57,15 @@ function App() {
     setSearchValue(e.target.value)
   }
 
+  const isItemAdded = (id) => {
+    return cartItems.some(obj => +obj.id === +id)
+  }
+
   const onFavorite = async (obj) => {
     try {
       if(favorites.find(favObj => favObj.id === obj.id)) {
         axios.delete(`https://61433babc8700e00178d01d8.mockapi.io/favorites/${obj.id}`)
-        // setFavorites(prev => prev.filter(item => item.id !== obj.id))
+        setFavorites(prev => prev.filter(item => item.id !== obj.id))
       } else {
         const { data } = await axios.post('https://61433babc8700e00178d01d8.mockapi.io/favorites', obj)
         setFavorites((prev) => [...prev, data])
@@ -70,7 +76,8 @@ function App() {
   }
   
   return (
-    <div className="wrapper clear">
+    <AppContext.Provider value={{ items, cartItems, favorites, isItemAdded, setCartOpened, setCartItems }}>
+      <div className="wrapper clear">
       {
       cartOpened && 
       <Basket 
@@ -97,11 +104,11 @@ function App() {
       </Route>
       <Route path="/favorites" exact>
         <Favorites
-          items={favorites}
           onFavorite={onFavorite}
         />
       </Route>
     </div>
+    </AppContext.Provider>
   );
 }
 

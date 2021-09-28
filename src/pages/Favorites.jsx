@@ -1,9 +1,13 @@
+import React from 'react'
 import Card from '../components/Card'
+import { AppContext } from '../App'
 
 // import searchIcon from '../assets/search.svg'
 // import btnRemove from '../assets/btnRemove.svg'
 
-function Favorites({items, onFavorite}) {
+function Favorites({ onFavorite }) {
+  const { favorites } = React.useContext(AppContext)
+
   return (
     <div className="content p-40">
     <div className="d-flex justify-between align-center mb-40">
@@ -11,8 +15,7 @@ function Favorites({items, onFavorite}) {
     </div>
     <div className="sneakers">
       {
-        items
-        .map((item) => (
+        favorites.map((item) => (
         <Card 
           key={item.id}
           favorited={true}

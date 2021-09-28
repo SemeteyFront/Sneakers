@@ -5,15 +5,15 @@ import ContentLoader from "react-content-loader"
 import heartIcon from '../../assets/heartIcon.svg'
 import heartLiked from '../../assets/heartLiked.svg'
 import './Card.scss'
+import { AppContext } from '../../App'
 
-function Card({ id ,title, price, imageUrl, onFavorite, onPlus, favorited = false, added = false, loading = false }) {
+function Card({ id ,title, price, imageUrl, onFavorite, onPlus, favorited = false, loading = false }) {
 
-  const [isAdded, setIsAdded ] = React.useState(added)
+  const { isItemAdded } = React.useContext(AppContext)
   const [isFavorite, setIsFavorite ] = React.useState(favorited)
 
   const onClickPlus = () => {
     onPlus({ id ,title, price, imageUrl})
-    setIsAdded(!isAdded)
   }
 
   const onClickLiked = () => {
@@ -48,7 +48,7 @@ function Card({ id ,title, price, imageUrl, onFavorite, onPlus, favorited = fals
               <p>Цена:</p>
               <b>{price} сом</b>
             </div>
-            <img src={isAdded ? btnCkecked : plus} alt="plusBtn" onClick={onClickPlus}/>
+            <img src={isItemAdded(id) ? btnCkecked : plus} alt="plusBtn" onClick={onClickPlus}/>
           </div> 
         </>
       }
