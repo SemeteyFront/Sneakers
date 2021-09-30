@@ -5,6 +5,7 @@ import axios from 'axios';
 import Basket from './components/Basket';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
+import Orders from './pages/Orders';
 
 export const AppContext = React.createContext({})
 
@@ -104,6 +105,12 @@ function App() {
       </Route>
       <Route path="/favorites" exact>
         <Favorites
+          onFavorite={onFavorite}
+        />
+      </Route>
+
+      <Route path="/orders" exact>
+        <Orders
           onFavorite={onFavorite}
         />
       </Route>

@@ -1,20 +1,39 @@
 import React from 'react'
+import axios from 'axios'
 import { AppContext } from '../../App'
 import './Basket.scss'
 import btnRemove from '../../assets/btnRemove.svg'
 import arrow from '../../assets/arrow.svg'
 import emptyCard from '../../assets/empty-cart.png'
-import oform from '../../assets/oform.jpg'
+import oform from '../../assets/oform.png'
 import Info from '../Info/Info'
 
 
-function Basket({onClose, onRemove, items = []}) {
-  const { setCartItems } = React.useContext(AppContext)
-  const [ isOrderComplete, setIsOrderComplete ] = React.useState(false)
 
-  const onClickOrder = () => {
-    setIsOrderComplete(true)
-    setCartItems([])
+
+function Basket({onClose, onRemove, items = []}) {
+  const { cartItems, setCartItems } = React.useContext(AppContext)
+  const [ orderId, setOrdeId ] = React.useState(null)
+  const [ isOrderComplete, setIsOrderComplete ] = React.useState(false)
+  const [ isLoading, setIsLoading ] = React.useState(false)
+  const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0)
+
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true)
+      await axios.post('https://61433babc8700e00178d01d8.mockapi.io/orders', {
+        items : cartItems
+      })
+      const {data} = await axios.post('https://61433babc8700e00178d01d8.mockapi.io/cart', [])
+      setOrdeId(data.id)
+      setIsOrderComplete(true)
+      setCartItems([])
+
+      
+    } catch (error) {
+      alert("Не удалось создать заказ!")
+    }
+    setIsLoading(false)
   }
 
   return (
@@ -45,7 +64,6 @@ function Basket({onClose, onRemove, items = []}) {
                   <b>{obj.price} сом</b>
                 </div>
                 <img 
-                  key={obj.id}
                   onClick={() => onRemove(obj.id)}
                   className="removeBtn" 
                   src={btnRemove} 
@@ -58,21 +76,21 @@ function Basket({onClose, onRemove, items = []}) {
             <li>
               <span>Итого: </span>
               <div></div>
-              <b>21 498 сом </b>
+              <b>{totalPrice} сом </b>
             </li>
             <li>
               <span>Налог 5%: </span>
               <div></div>
-              <b>1074 сом </b>
+              <b>{totalPrice / 100 * 5} сом </b>
             </li>
           </ul>
-          <button onClick={onClickOrder} className="greenBtn">Оформить заказ <img src={arrow} alt="arrow" /></button>
+          <button disabled={isLoading} onClick={onClickOrder} className="greenBtn">Оформить заказ <img src={arrow} alt="arrow" /></button>
         </div>
           </div>
           :
           <Info 
             title={isOrderComplete ? "Заказ оформлен" : "Корзина пустая"}
-            description={isOrderComplete ? "Ваш заказ #13 скоро будет передан курьерской доставке" : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."}
+            description={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."}
             image={isOrderComplete ? oform : emptyCard}>
           </Info>
         }

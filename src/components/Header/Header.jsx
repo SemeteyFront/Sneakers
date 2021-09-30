@@ -1,11 +1,17 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/logo.png'
-import cart from '../../assets/cart.svg'
-import user from '../../assets/user.svg'
-import heart from '../../assets/heart.svg'
+import baskets from '../../assets/baskets.png'
+import users from '../../assets/users.png'
+import hearts from '../../assets/hearts.png'
 import './Header.scss'
+import { AppContext } from '../../App'
 
 function Header({onClickBasket}) {
+  const { cartItems } = React.useContext(AppContext)
+
+  const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0)
+
   return (
     <header className="d-flex justify-between align-center p-40">
         <Link to="/">
@@ -19,18 +25,20 @@ function Header({onClickBasket}) {
         </Link>
         <ul className="d-flex">
           <li onClick={onClickBasket} className="mr-30 cu-p">
-            <img src={cart} alt="Cart"/>
-            <span>1205 сом</span>
+            <img style={{width: 20, height: 20}} src={baskets} alt="Cart"/>
+            <span>{ totalPrice } сом</span>
           </li>
           <li className="mr-20 cu-p">
             <Link 
               to="/favorites">
-                <img src={heart}
+                <img style={{width: 20, height: 20}} src={hearts}
                 alt="heart"/>
               </Link>
           </li>
           <li>
-            <img src={user} alt="user"/>
+            <Link to="/orders">
+              <img style={{width: 20, height: 20}} src={users} alt="user"/>
+            </Link>
           </li>
         </ul>
       </header>

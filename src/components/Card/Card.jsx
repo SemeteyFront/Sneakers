@@ -2,8 +2,8 @@ import React from 'react'
 import plus from '../../assets/btnPlus.svg'
 import btnCkecked from '../../assets/btnChecked.svg'
 import ContentLoader from "react-content-loader"
-import heartIcon from '../../assets/heartIcon.svg'
-import heartLiked from '../../assets/heartLiked.svg'
+import liked from '../../assets/hearts.png'
+import hIcon from '../../assets/hIcon.png'
 import './Card.scss'
 import { AppContext } from '../../App'
 
@@ -39,7 +39,7 @@ function Card({ id ,title, price, imageUrl, onFavorite, onPlus, favorited = fals
         </ContentLoader> :
         <>
           <div className="favorite" onClick={onClickLiked}>
-            <img src={isFavorite ? heartLiked : heartIcon} alt="heartIcon" />
+            <img style={{width:18, height: 18}} src={isFavorite ? liked : hIcon} alt="heartIcon" />
           </div>
           <img className="kross" src={imageUrl} alt="kross" />
           <h5>{title}</h5>
